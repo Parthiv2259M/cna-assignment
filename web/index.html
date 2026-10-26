@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>DevOps Tool Poll</title>
+  <style>
+    body { font-family: sans-serif; max-width: 480px; margin: 60px auto; text-align: center; }
+    button { padding: 10px 20px; margin: 6px; font-size: 16px; cursor: pointer; }
+    .row { margin: 10px 0; font-size: 18px; }
+  </style>
+</head>
+<body>
+  <h1>Favorite DevOps tool?</h1>
+  <div>
+    <button onclick="vote('Docker')">Docker</button>
+    <button onclick="vote('Kubernetes')">Kubernetes</button>
+    <button onclick="vote('Terraform')">Terraform</button>
+  </div>
+  <h2>Results</h2>
+  <div id="results"></div>
+  <script>
+    async function vote(o) {
+      await fetch('/api/vote/' + o, { method: 'POST' });
+      load();
+    }
+    async function load() {
+      const data = await (await fetch('/api/results')).json();
+      document.getElementById('results').innerHTML =
+        Object.entries(data).map(([k, v]) => `<div class="row">${k}: <b>${v}</b></div>`).join('');
+    }
+    load();
+    setInterval(load, 3000);
+  </script>
+</body>
+</html>
