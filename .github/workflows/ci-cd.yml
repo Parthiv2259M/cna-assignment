@@ -48,7 +48,7 @@ jobs:
     runs-on: self-hosted
     steps:
       - name: Deploy to Docker Desktop Kubernetes
-        shell: pwsh
+        shell: powershell
         run: |
           kubectl config use-context docker-desktop
           kubectl set image deployment/api api=${{ secrets.DOCKERHUB_USERNAME }}/cna-api:${{ github.sha }} -n cna
