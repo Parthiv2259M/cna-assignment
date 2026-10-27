@@ -55,3 +55,4 @@ jobs:
           kubectl set image deployment/web web=${{ secrets.DOCKERHUB_USERNAME }}/cna-web:${{ github.sha }} -n cna
           kubectl rollout status deployment/api -n cna --timeout=180s
           kubectl rollout status deployment/web -n cna --timeout=180s
+          kubectl get pods -n cna
